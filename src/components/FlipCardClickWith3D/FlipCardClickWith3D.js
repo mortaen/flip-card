@@ -1,27 +1,29 @@
-import styled, { css } from "styled-components";
-import { useState } from "react";
+import styled, { css } from "styled-components"
+import { useState } from "react"
 
 function FlipCardClickWith3D() {
-  const [isCardFlipped, setIsCardFlipped] = useState(false);
+  const [isCardFlipped, setIsCardFlipped] = useState(false)
   const handleFlipCardClick = () => {
-    setIsCardFlipped(!isCardFlipped);
-  };
+    setIsCardFlipped(!isCardFlipped)
+  }
   return (
     <Card onClick={handleFlipCardClick}>
       <CardContent isCardFlipped={isCardFlipped}>
-        <CardFront>
-          <CardTitle>The Fair</CardTitle>
-          <CardSubtitle>Time for some fun</CardSubtitle>
+        <CardFront isCardFlipped={isCardFlipped}>
+          <CardTitle isCardFlipped={isCardFlipped}>The Fair</CardTitle>
+          <CardSubtitle isCardFlipped={isCardFlipped}>
+            Time for some fun
+          </CardSubtitle>
         </CardFront>
         <CardBack>
-          <CardBody>
+          <CardBody isCardFlipped={isCardFlipped}>
             Welcome to the Fair! A place for the whole family to relax and have
             fun! Enjoy your stay!
           </CardBody>
         </CardBack>
       </CardContent>
     </Card>
-  );
+  )
 }
 
 const CardContent = styled.div`
@@ -35,11 +37,11 @@ const CardContent = styled.div`
     css`
       transform: rotateY(0.5turn);
     `}
-`;
+`
 
 const Card = styled.div`
   width: 400px;
-`;
+`
 
 const CardFront = styled.div`
   position: absolute;
@@ -65,25 +67,41 @@ const CardFront = styled.div`
     bottom: 1rem;
     left: 1rem;
     border: 3px solid currentColor;
-    transform: translateZ(3rem);
+    /* transform: translateZ(3rem); */
+    transition: transform 3s;
+    ${({ isCardFlipped }) =>
+      isCardFlipped &&
+      css`
+        transform: translateZ(6rem);
+      `}
   }
-`;
+`
 
 const CardTitle = styled.h3`
   font-size: 3.5rem;
-  transform: translateZ(9rem);
   order: 2;
   text-transform: uppercase;
-`;
+  transition: transform 3s;
+  ${({ isCardFlipped }) =>
+    isCardFlipped &&
+    css`
+      transform: translateZ(18rem);
+    `}
+`
 
 const CardSubtitle = styled.p`
-  transform: translateZ(6rem);
   text-transform: uppercase;
   letter-spacing: 4px;
   font-size: 0.75rem;
   font-weight: 700;
   opacity: 0.7;
-`;
+  transition: transform 3s;
+  ${({ isCardFlipped }) =>
+    isCardFlipped &&
+    css`
+      transform: translateZ(12rem);
+    `}
+`
 
 const CardBack = styled.div`
   position: absolute;
@@ -99,13 +117,18 @@ const CardBack = styled.div`
   transform: rotateY(0.5turn);
   color: #b7c9e5;
   background: #333;
-`;
+`
 
 const CardBody = styled.p`
-  transform: translateZ(6rem);
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 1.6;
-`;
+  transition: transform 3s;
+  ${({ isCardFlipped }) =>
+    !isCardFlipped &&
+    css`
+      transform: translateZ(12rem);
+    `}
+`
 
-export default FlipCardClickWith3D;
+export default FlipCardClickWith3D
